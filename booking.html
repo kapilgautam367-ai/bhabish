@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Looks Travel Booking System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<style>
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#0f172a,#020617);
+color:white;
+}
+
+section#book{
+padding:80px 8%;
+}
+
+h2{
+text-align:center;
+color:#00eaff;
+margin-bottom:20px;
+font-size:32px;
+}
+
+.form{
+background:rgba(255,255,255,0.08);
+padding:25px;
+border-radius:15px;
+backdrop-filter:blur(20px);
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+input,select{
+padding:12px;
+border:none;
+border-radius:8px;
+background:rgba(255,255,255,0.1);
+color:white;
+outline:none;
+}
+
+input:focus,select:focus{
+background:rgba(255,255,255,0.2);
+}
+
+button{
+grid-column:1/-1;
+padding:14px;
+background:#00eaff;
+color:#000;
+font-weight:bold;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+button:hover{
+background:#00ffcc;
+}
+
+.whatsapp-btn{
+text-align:center;
+margin-top:20px;
+}
+
+.whatsapp-btn a{
+background:#25D366;
+color:white;
+padding:12px 18px;
+border-radius:30px;
+text-decoration:none;
+display:inline-block;
+}a,nav{
+    color: #f1fd09;
+         
+          font: bolder;
+            width: 40px;
+            height: 40px;
+            padding: 20px;
+            gap: 90px;
+            font-size: 30px;
+           text-align: center;
+       text-decoration: dotted;
+            white-space: nowrap;
+        margin-top: 20px;
+    }option{
+        background-color: #000;
+    }
+            
+        </style>
+        
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="hh.html">Our Services</a>
+                <a href="booking.html">Booking</a>
+                <a href="contact.html">Contact Us</a>
+                
+            </nav>
+
+
+
+<body>
+
+
+<!-- ================= BOOKING SECTION ================= -->
+<section id="book">
+
+<h2>Book Your Flight</h2>
+
+<form class="form" onsubmit="confirmBooking(event)">
+
+<input type="text" id="name" placeholder="Full Name" required>
+
+<input type="email" id="email" placeholder="Email Address" required>
+
+<select id="tripType" onchange="updateTrip()" required>
+<option value="oneway">One Way</option>
+<option value="round">Round Trip</option>
+<option value="multi">Multi City</option>
+</select>
+
+<input list="airports" id="from" placeholder="From Airport" required>
+
+<input list="airports" id="to" placeholder="To Airport" required>
+
+<input type="text" id="multiCity" placeholder="Add Stop (Multi City)" style="display:none;">
+
+<input type="date" id="departDate" required>
+
+<input type="date" id="returnDate" style="display:none;">
+
+<select id="travelClass">
+<option>Economy</option>
+<option>Business</option>
+<option>First Class</option>
+</select>
+
+<select id="passengers">
+<option value="1">1 Passenger</option>
+<option value="2">2 Passengers</option>
+<option value="3">3 Passengers</option>
+<option value="4">4+ Passengers</option>
+</select>
+<input type="number" id="amount" placeholder="Enter Amount Eg:100000-500000 NPR" required>
+<select style="color: #ffff08;" name="Currency" required>Currency
+   <label for="Currency">Currency</label>
+    <option value="USD" >USD</option required>
+    <option value="INR">INR</option required>
+    <option value="KRW">KRW</option required>
+    <option value="NPR">NPR</option required>
+    <option value="Filling my currency with text" >Filling my currency below  text<input type="text"> <--- If Any Other Currency:</option required>
+</select>
+
+<button type="submit">Confirm Booking</button>
+
+</form>
+
+<div class="whatsapp-btn">
+<a href="https://wa.me/821058055120" target="_blank">
+📞 Chat on WhatsApp
+</a>
+</div>
+
+</section>
+
+<!-- AIRPORT LIST -->
+<datalist id="airports">
+<option>Kathmandu (KTM)</option>
+<option>Seoul (ICN)</option>
+<option>Dubai (DXB)</option>
+<option>London (LHR)</option>
+<option>Tokyo (HND)</option>
+<option>New York (JFK)</option>
+<option>Paris (CDG)</option>
+<option>Singapore (SIN)</option>
+</datalist>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+
+function updateTrip(){
+let type = document.getElementById("tripType").value;
+let returnDate = document.getElementById("returnDate");
+let multiCity = document.getElementById("multiCity");
+
+if(type === "round"){
+returnDate.style.display = "block";
+multiCity.style.display = "none";
+}
+else if(type === "multi"){
+multiCity.style.display = "block";
+returnDate.style.display = "none";
+}
+else{
+returnDate.style.display = "none";
+multiCity.style.display = "none";
+}
+}
+
+function confirmBooking(event){
+event.preventDefault();
+
+let name = document.getElementById("name").value;
+let email = document.getElementById("email").value;
+let from = document.getElementById("from").value;
+let to = document.getElementById("to").value;
+let tripType = document.getElementById("tripType").value;
+let depart = document.getElementById("departDate").value;
+let ret = document.getElementById("returnDate").value;
+let multi = document.getElementById("multiCity").value;
+let travelClass = document.getElementById("travelClass").value;
+let passengers = document.getElementById("passengers").value;
+let amount = document.getElementById("amount").value;
+
+let message =
+"🛫 NEW BOOKING REQUEST%0A%0A" +
+"Name: " + name + "%0A" +
+"Email: " + email + "%0A" +
+"Trip Type: " + tripType + "%0A" +
+"From: " + from + "%0A" +
+"To: " + to + "%0A" +
+"Departure: " + depart + "%0A";
+
+if(tripType === "round"){
+message += "Return: " + ret + "%0A";
+}
+
+if(tripType === "multi"){
+message += "Multi City: " + multi + "%0A";
+}
+
+message +=
+"Class: " + travelClass + "%0A" +
+"Passengers: " + passengers + "%0A" +
+"Amount: " + amount + "%0A%0A" +
+"Please confirm booking.";
+
+window.open("https://wa.me/9762219660?text=" + message);
+
+}
+
+</script>
+
+</body>
+</html>
